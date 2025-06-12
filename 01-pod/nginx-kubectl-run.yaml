@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2025-06-11T08:38:00Z"
+  labels:
+    run: nginx
+  name: nginx
+  namespace: default
+  resourceVersion: "84904"
+  uid: d1479830-99f6-44e7-84fe-782804bb64aa
+spec:
+  containers:
+    - image: nginx
+      imagePullPolicy: Always
+      name: nginx
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          name: kube-api-access-w2pv6
+          readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: docker-desktop
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+  volumes:
+    - name: kube-api-access-w2pv6
+      projected:
+        defaultMode: 420
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              items:
+                - key: ca.crt
+                  path: ca.crt
+              name: kube-root-ca.crt
+          - downwardAPI:
+              items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+status:
+  conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-11T08:38:03Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-11T08:38:00Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-11T08:38:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-11T08:38:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-11T08:38:00Z"
+      status: "True"
+      type: PodScheduled
+  containerStatuses:
+    - containerID: docker://d1bbb3db1a8e70ed17bc661e1a2f3a1d22a1b20adb524ec32f435841b93ff1bc
+      image: nginx:latest
+      imageID: docker-pullable://nginx@sha256:6784fb0834aa7dbbe12e3d7471e69c290df3e6ba810dc38b34ae33d3c1c05f7d
+      lastState: {}
+      name: nginx
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-11T08:38:03Z"
+      volumeMounts:
+        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          name: kube-api-access-w2pv6
+          readOnly: true
+          recursiveReadOnly: Disabled
+  hostIP: 192.168.65.3
+  hostIPs:
+    - ip: 192.168.65.3
+  phase: Running
+  podIP: 10.1.0.12
+  podIPs:
+    - ip: 10.1.0.12
+  qosClass: BestEffort
+  startTime: "2025-06-11T08:38:00Z"
