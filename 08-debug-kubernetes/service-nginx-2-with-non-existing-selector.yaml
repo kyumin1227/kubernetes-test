@@ -12,7 +12,7 @@ spec:
       protocol: TCP
       targetPort: 80
   selector:
-    run: nonexisting
+    run: nginx
   type: ClusterIP
 status:
   loadBalancer: {}

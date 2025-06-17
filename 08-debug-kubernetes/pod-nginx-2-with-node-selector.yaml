@@ -12,6 +12,4 @@ spec:
       resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
-  nodeSelector:
-    nodeType: test
 status: {}
