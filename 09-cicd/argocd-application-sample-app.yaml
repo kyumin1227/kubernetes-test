@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: test
+  source:
+    repoURL: https://github.com/kyumin1227/fastapi-sample.git
+    path: manifests/fastapi-sample
+  destination:
+    namespace: test
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated: {}
