@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-19
+  namespace: default
+spec:
+  containers:
+    - name: nginx-pod
+      image: nginx:1.19 # 이미지 버전을 수정합니다.
