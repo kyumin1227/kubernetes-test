@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-pod
+  namespace: default
+  labels:
+    app: data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data
+  template:
+    metadata:
+      labels:
+        app: data
+    spec:
+      containers:
+        - name: data
+          image: busybox
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "while true; do date >> /data/pod-out.txt; cd /data; sync; sync; sleep 30; done"
+          volumeMounts:
+            - name: data-vol
+              mountPath: /data
+      volumes:
+        - name: data-vol
+          persistentVolumeClaim:
+            claimName: default-pvc
