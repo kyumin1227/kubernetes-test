@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: kafka
+  namespace: argocd
+spec:
+  description: "Kafka AppProject"
+  sourceRepos:
+    - https://charts.bitnami.com/bitnami
+    - https://github.com/kyumin1227/kubernetes-test.git
+  destinations:
+    - namespace: kafka
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
