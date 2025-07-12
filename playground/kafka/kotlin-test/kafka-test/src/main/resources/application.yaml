@@ -1,10 +1,9 @@
 spring:
   application:
-    name:
-      kafka-test
+    name: kafka-test
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     consumer:
       group-id: kafka-test  // default group
       auto-offset-reset: earliest
