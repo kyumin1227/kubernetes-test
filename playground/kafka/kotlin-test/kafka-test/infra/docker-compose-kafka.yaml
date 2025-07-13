@@ -21,7 +21,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   app:
-    image: kafka-test:v1.1
+    image: kafka-test:v1.3
     container_name: app
     ports:
       - "8080:8080"
