@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-dnspolicy-default
+  labels:
+    app.kubernetes.io/name: sample-dnspolicy-default
+spec:
+  dnsPolicy: Default
+  containers:
+    - name: nginx-container
+      image: nginx:1.16

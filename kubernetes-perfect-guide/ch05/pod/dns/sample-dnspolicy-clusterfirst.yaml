@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-dnspolicy-clusterfirst
+  labels:
+    app.kubernetes.io/name: sample-dnspolicy-clusterfirst
+spec:
+  dnsPolicy: ClusterFirst
+  containers:
+    - name: nginx-container
+      image: nginx:1.16
