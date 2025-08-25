@@ -1,0 +1,18 @@
+# 한번 정상 종료 할때까지 하나씩 계속 생성 (작업 큐)
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sample-single-workqueue-job
+spec:
+  # completions: 5  미지정 시 무제한
+  parallelism: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: tools-container
+          image: amsy810/tools:v2.0
+          command: ["sleep"]
+          args: ["30"]
+      restartPolicy: Never

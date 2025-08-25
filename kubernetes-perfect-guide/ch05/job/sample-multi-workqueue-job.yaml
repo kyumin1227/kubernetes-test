@@ -1,0 +1,18 @@
+# 몇 개의 병렬 수로 계속 실행하나 하나라도 정상 종료 하면 더 이상 pod를 생성하지 않음 (병렬 큐)
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sample-multi-workqueue-job
+spec:
+  # completions: 5  미지정 시 무제한
+  parallelism: 3
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: tools-container
+          image: amsy810/tools:v2.0
+          command: ["sleep"]
+          args: ["30"]
+      restartPolicy: Never

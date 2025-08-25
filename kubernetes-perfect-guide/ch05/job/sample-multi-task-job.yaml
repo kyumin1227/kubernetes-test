@@ -1,0 +1,19 @@
+# 3개 실행 하여 성공 하면 남은 성공 횟수가 2번 이므로 최대 2개만 실행
+# 즉 병렬 수가 성공 횟수 이상이면 성공 횟수만큼만 파드가 생성
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sample-multi-task-job
+spec:
+  completions: 5
+  parallelism: 3
+  backoffLimit: 5
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: tools-container
+          image: amsy810/tools:v2.0
+          command: ["sleep"]
+          args: ["30"]
+      restartPolicy: Never

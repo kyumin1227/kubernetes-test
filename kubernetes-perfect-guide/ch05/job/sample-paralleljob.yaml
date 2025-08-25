@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sample-paralleljob
+spec:
+  completions: 10
+  parallelism: 2
+  backoffLimit: 10
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: tools-container
+          image: amsy810/tools:v2.0
+          command: ["sleep"]
+          args: ["30"]
+      restartPolicy: Never

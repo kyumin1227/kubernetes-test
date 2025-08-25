@@ -1,0 +1,18 @@
+# 한번만 실행되고 종료되게 설정
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sample-oneshot-task-job
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: tools-container
+          image: amsy810/tools:v2.0
+          command: ["sleep"]
+          args: ["30"]
+      restartPolicy: Never
