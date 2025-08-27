@@ -1,0 +1,17 @@
+# 노드 상에 pod가 없다면 응답 불가능
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-lb-local
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  healthCheckNodePort: 30086
+  selector:
+    app: sample-app
+  ports:
+    - name: http-port
+      protocol: TCP
+      port: 8080
+      targetPort: 80
+      nodePort: 30085

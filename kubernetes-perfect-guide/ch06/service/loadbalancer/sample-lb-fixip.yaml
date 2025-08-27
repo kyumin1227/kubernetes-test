@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-lb-fixip
+spec:
+  type: LoadBalancer
+  loadBalancerIP: xxx.xxx.xxx.xxx # 보유한 주소는 정적 지정 가능
+  selector:
+    app: sample-app
+  ports:
+    - name: "http-port"
+      protocol: "TCP"
+      port: 8080
+      targetPort: 80
+      nodePort: 30082
