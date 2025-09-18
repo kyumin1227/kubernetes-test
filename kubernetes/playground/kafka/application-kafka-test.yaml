@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-test
+  namespace: argocd
+spec:
+  project: kafka
+  source:
+    repoURL: https://github.com/kyumin1227/kubernetes-test.git
+    targetRevision: main
+    path: playground/kafka/kotlin-test/kafka-test/kafka-test-chart
+    helm:
+      releaseName: kafka-test
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kafka
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
