@@ -44,9 +44,18 @@ resource "kind_cluster" "default" {
         protocol       = "TCP"
       }
 
+    # traefik 대시보드
       extra_port_mappings {
         container_port = 30090
-        host_port      = 9090
+        host_port      = 8090
+        listen_address = "0.0.0.0"
+        protocol       = "TCP"
+      }
+
+      # argocd 대시보드
+      extra_port_mappings {
+        container_port = 30091
+        host_port      = 8091
         listen_address = "0.0.0.0"
         protocol       = "TCP"
       }
@@ -64,12 +73,17 @@ provider "helm" {
   }
 }
 
+resource "kubernetes_namespace_v1" "argocd" {
+  metadata {
+    name = "argocd"
+  }
+}
+
 resource "helm_release" "argocd" {
   name       = "argocd"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
   namespace  = "argocd"
-  create_namespace = true
 }
 
 resource "helm_release" "traefik" {
@@ -126,6 +140,30 @@ resource "kubernetes_service_v1" "traefik_dashboard" {
       port = 8080
       target_port = 8080
       node_port = 30090
+    }
+  }
+}
+
+# argocd 대시보드 연결
+resource "kubernetes_service_v1" "argocd_dashboard" {
+  metadata {
+    name = "argocd-dashboard-service"
+    namespace = "argocd"
+  }
+  spec {
+    type = "NodePort"
+
+    selector = {
+      "app.kubernetes.io/name" = "argocd-server"
+      "app.kubernetes.io/instance" = "argocd"
+    }
+
+    port {
+      name = "dashboard"
+      protocol = "TCP"
+      port = 443
+      target_port = 8080
+      node_port = 30091
     }
   }
 }
