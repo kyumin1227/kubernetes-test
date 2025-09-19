@@ -15,13 +15,28 @@ terraform {
   }
 }
 
+variable "environment" {
+  description = "Environment (local/ci)"
+  type        = string
+  default     = "local"
+}
+
+variable "kubeconfig_path" {
+  description = "Path to kubeconfig file"
+  type        = string
+  default     = ""
+}
+
 provider "kind" {
   # Configuration options
 }
 
 resource "kind_cluster" "default" {
-  name           = "test-cluster"
-  kubeconfig_path = pathexpand("./test-cluster-config")
+  name = "test-cluster"
+  kubeconfig_path = pathexpand(
+    var.kubeconfig_path != "" ? var.kubeconfig_path :
+    (var.environment == "ci" ? "~/.kube/test-cluster-config" : "./test-cluster-config")
+  )
 
   kind_config {
     kind        = "Cluster"
