@@ -26,6 +26,7 @@ env:
   KUBECTL_VERSION: "v1.28.0"
   HELM_VERSION: "v3.14.0"
   WORKING_DIR: terraform/kind-practice
+  KUBECONFIG: "$HOME/.kube/test-cluster-config"
 
 jobs:
   terraform:
