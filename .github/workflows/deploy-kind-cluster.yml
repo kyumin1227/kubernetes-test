@@ -118,13 +118,13 @@ jobs:
 
             <details><summary>Show Plan</summary>
 
-            \`\`\`
+            ```
             ${{ steps.plan.outputs.plan_output }}
-            \`\`\`
+            ```
 
             </details>
 
-            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            *Pushed by: @${{ github.actor }}, Action: `${{ github.event_name }}`*`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
@@ -139,6 +139,10 @@ jobs:
           (github.event.inputs.action == 'apply')
         run: |
           terraform apply -auto-approve tfplan
+
+          echo "Copying kubeconfig for kubectl..."
+          mkdir -p $HOME/.kube
+          cp ./test-cluster-config $KUBECONFIG
 
           # 클러스터가 준비될 때까지 대기
           echo "Waiting for cluster to be ready..."
